@@ -12,6 +12,9 @@ namespace OnionArchDemo.Persistence.Context
     {
         public DbSet<Product> Products { get; set; }
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options) { }
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasData(
@@ -22,20 +25,20 @@ namespace OnionArchDemo.Persistence.Context
                     Quentity = 5,
                     Value = 12
                 },
-                          new Product()
-                          {
-                              Id = Guid.NewGuid(),
-                              Name = "Table",
-                              Quentity = 3,
-                              Value = 23
-                          },
-                                    new Product()
-                                    {
-                                        Id = Guid.NewGuid(),
-                                        Name = "Book",
-                                        Quentity = 12,
-                                        Value = 76
-                                    }
+                new Product()
+                {
+                   Id = Guid.NewGuid(),
+                   Name = "Table",
+                   Quentity = 3,
+                   Value = 23
+                },
+                new Product()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Book",
+                    Quentity = 12,
+                    Value = 76
+                }
                 );
 
             base.OnModelCreating(modelBuilder);
