@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnionArchDemo.Application.Dto;
 using OnionArchDemo.Application.Interfaces.Repository;
 
 namespace OnionArchDemo.WebApi.Controllers
@@ -8,9 +9,21 @@ namespace OnionArchDemo.WebApi.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        public ProductController(IProductRepository)
+        private readonly IProductRepository productRepository;
+        public ProductController(IProductRepository productRepository)
         {
-
+            this.productRepository = productRepository;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var allList = await productRepository.GetAllAsync();
+            var result = allList.Select(i => new ProductViewDto() { Id = i.Id, Name = i.Name }).ToList();
+            return Ok(result);
+        }
+
+
+
     }
 }
